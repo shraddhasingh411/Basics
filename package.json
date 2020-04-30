@@ -1,0 +1,16 @@
+{
+  "name": "pptr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node example.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^3.0.1",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
