@@ -24,16 +24,17 @@ puppeteer.launch(config.launchOptions).then(async browser => {
   await page.goto('https://Google.com');
   await page.type(homepage.search, "hello");
   await page.type(homepage.search, "world");
-   await page.waitFor(100);
+  
 
-  let promise = new promise((resolve,reject) => 
-  {
+  //let promise = new promise((resolve,reject) => 
+  //{
+      
   var list= [];
    list=page.$(dropdown.values);
   console.log(list);
-  }).catch( () => {  
-    console.log("No suggestions");
-	});
+  //}).catch( () => {  
+  //  console.log("No suggestions");
+//	});
 
  await page.setRequestInterception(true);
  page.on('request', request => {
