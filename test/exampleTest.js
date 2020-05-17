@@ -1,55 +1,53 @@
-const puppeteer = require('puppeteer');
-const assert = require("Chai").assert;
+  const puppeteer = require('puppeteer');
+  const assert = require("Chai").assert;
 
-
-
-let config = {
+  let config = {
     launchOptions: {
        headless:false
      }
-}
+  }
 
-const homepage = {
+  const homepage = {
      search: 'input[type="text"]'
- }
-
- const  dropdown = {
+  }
+ 
+  const  dropdown = {
        
-	   values: '//div/ul[class="erkvQe"]/li'
- }
-
+	   values: 'li[class="sbct"]'
+  }
+  
        
-puppeteer.launch(config.launchOptions).then(async browser => {
+  puppeteer.launch(config.launchOptions).then(async browser => {
   const page = await browser.newPage();
   await page.goto('https://Google.com');
-  await page.type(homepage.search, "hello");
-  await page.type(homepage.search, "world");
+  await page.type(homepage.search, " Hello");
+  await page.type(homepage.search, " world");
+  await page.type(homepage.search, " program");
+ 
+
+  await page.setRequestInterception(true);
+  page.on('request', request => {
   
+  console.log(request.resourceType());
+  var xhr= request.url()
+  console.log(xhr);
+  if(xhr.indexOf('+Hello+world')> -1)
+  {
+  	  console.log("Search text present in xhr request");
+  }
 
-  //let promise = new promise((resolve,reject) => 
-  //{
-      
-  var list= [];
-   list=page.$(dropdown.values);
-  console.log(list);
-  //}).catch( () => {  
-  //  console.log("No suggestions");
-//	});
+  //assert.include(xhr,"helloworld"); 
+  }); 
+  
+     
+   const text = await page.evaluate(()=> Array.from(document.querySelectorAll('li[class="sbct"]'), element => element.textContent));
+  console.log(text[0]);
+  console.log(text[1]);
+  console.log(text[2]);
+  console.log(text[3]);
 
- await page.setRequestInterception(true);
- page.on('request', request => {
-
-   console.log(request.resourceType());
-   console.log(request.url());
-   
-});
-
-                                      
+                             
 
   await page.screenshot({path: 'example.png'})
- });
 
- 
- 
-
-
+  });
